@@ -6,9 +6,10 @@
 	Great for counting for example how many times retracts 
 	have been used and to keep track of service-intervalls.
 	
-	Five counters are possible to configure, Counters 1 and 2
-	can be used as telemetry window on main screen. Counters 
-	1 and 2 also have an alarm possibility (Switch).
+	This is DC/DS-16 version with two counters.
+	
+	Counters 1 and 2 can be used as telemetry window on 
+	main screen. They also have an alarm possibility (Switch).
 	
 	Label can be configured for all counters and counter
 	display is updated on app-screen per usage.
@@ -30,10 +31,8 @@
 --]]
 ----------------------------------------------------------------------
 -- Locals for the application
-local cnt1, cnt2, cnt3, cnt4, cnt5, cntAlm1, cntAlm2
-local cntLb1, cntLb2, cntLb3, cntLb4, cntLb5
-local cntSw1, cntSw2, cntSw3, cntSw4, cntSw5
-local stateCnt1, stateCnt2, stateCnt3, stateCnt4, stateCnt5 = 0,0,0,0,0
+local cntLb1, cntLb2, cntSw1, cntSw2, cnt1, cnt2, cntAlm1, cntAlm2
+local stateCnt1, stateCnt2 = 0,0
 ----------------------------------------------------------------------
 -- Function for translation file-reading
 local function readFile(path) 
@@ -165,7 +164,7 @@ end
 -- Draw the main form (Application inteface)
 local function initForm()
 	form.addRow(1)
-	form.addLabel({label="---     RC-Thoughts Jeti Tools      ---",font=FONT_BIG})
+	form.addLabel({label="---   RC-Thoughts Jeti Tools    ---",font=FONT_BIG})
 	
 	form.addRow(1)
 	form.addLabel({label=trans1.counter1,font=FONT_BOLD})
@@ -206,58 +205,13 @@ local function initForm()
 	form.addIntbox(string.format("%f", cntAlm2),0,32767,0,0,1,almChanged2)
 	
 	form.addRow(1)
-	form.addLabel({label=trans1.counter3,font=FONT_BOLD})
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.counterName,width=175})
-	form.addTextbox(cntLb3,14,cntLbChanged3)
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.switch,width=200})
-	form.addInputbox(cntSw3,true,cntSwChanged3)
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.currentCnt})
-	form.addIntbox(string.format("%f", cnt3),0,32767,0,0,1,cntChanged3)
-
-	form.addRow(1)
-	form.addLabel({label=trans1.counter4,font=FONT_BOLD})
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.counterName,width=175})
-	form.addTextbox(cntLb4,14,cntLbChanged4)
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.switch,width=200})
-	form.addInputbox(cntSw4,true,cntSwChanged4)
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.currentCnt})
-	form.addIntbox(string.format("%f", cnt4),0,32767,0,0,1,cntChanged4)
-
-	form.addRow(1)
-	form.addLabel({label=trans1.counter5,font=FONT_BOLD})
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.counterName,width=175})
-	form.addTextbox(cntLb5,14,cntLbChanged5)
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.switch,width=200})
-	form.addInputbox(cntSw5,true,cntSwChanged5)
-	
-	form.addRow(2)
-	form.addLabel({label=trans1.currentCnt})
-	form.addIntbox(string.format("%f", cnt5),0,32767,0,0,1,cntChanged5)
-	
-	form.addRow(1)
 	form.addLabel({label="Powered by RC-Thoughts.com - v."..cntrVersion.." ",font=FONT_MINI, alignRight=true})
 end
 ----------------------------------------------------------------------
 -- Runtime functions, read status of switches and store latching switch state
 -- also resets count if reaches over 32767 and takes care of counter switches
 local function loop()
-	local cntSw1, cntSw2, cntSw3, cntSw4, cntSw5 = system.getInputsVal(cntSw1, cntSw2, cntSw3, cntSw4, cntSw5)
+	local cntSw1, cntSw2 = system.getInputsVal(cntSw1, cntSw2)
 	
 	if (cntSw1 == 1 and stateCnt1 == 0) then
 		stateCnt1 = 1
@@ -285,55 +239,16 @@ local function loop()
 		end
 	end
 	
-	if (cntSw3 == 1 and stateCnt3 == 0) then
-		stateCnt3 = 1
-		cnt3 = cnt3 + 1
-		if (cnt3 == 32768) then
-			cnt3 = 0
-		end
-		system.pSave("cnt3",cnt3)
-		form.reinit()
-		else if (cntSw3 ~= 1 and stateCnt3 == 1) then
-			stateCnt3 = 0
-		end
-	end
-	
-	if (cntSw4 == 1 and stateCnt4 == 0) then
-		stateCnt4 = 1
-		cnt4 = cnt4 + 1
-		if (cnt4 == 32768) then
-			cnt4 = 0
-		end
-		system.pSave("cnt4",cnt4)
-		form.reinit()
-		else if (cntSw4 ~= 1 and stateCnt4 == 1) then
-			stateCnt4 = 0
-		end
-	end
-	
-	if (cntSw5 == 1 and stateCnt5 == 0) then
-		stateCnt5 = 1
-		cnt5 = cnt5 + 1
-		if (cnt5 == 32768) then
-			cnt5 = 0
-		end
-		system.pSave("cnt5",cnt5)
-		form.reinit()
-		else if (cntSw5 ~= 1 and stateCnt5 == 1) then
-			stateCnt5 = 0
-		end
-	end
-	
 	if (cntAlm1 > 0 and cnt1 >= cntAlm1) then
-		system.setControl(8, 1, 0, 0)
+		system.setControl(1, 1, 0, 0)
 		else
-		system.setControl(8, 0, 0, 0)
+		system.setControl(1, 0, 0, 0)
 	end
 	
 	if (cntAlm2 > 0 and cnt2 >= cntAlm2) then
-		system.setControl(9, 1, 0, 0)
+		system.setControl(2, 1, 0, 0)
 		else
-		system.setControl(9, 0, 0, 0)
+		system.setControl(2, 0, 0, 0)
 	end
 end
 ----------------------------------------------------------------------
@@ -342,29 +257,20 @@ local function init()
 	system.registerForm(1,MENU_APPS,trans1.appName,initForm)	
 	cntLb1 = system.pLoad("cntLb1",trans1.counter1)
 	cntLb2 = system.pLoad("cntLb2",trans1.counter2)
-	cntLb3 = system.pLoad("cntLb3",trans1.counter3)
-	cntLb4 = system.pLoad("cntLb4",trans1.counter4)
-	cntLb5 = system.pLoad("cntLb5",trans1.counter5)
 	cntAlm1 = system.pLoad("cntAlm1", 0)
 	cntAlm2 = system.pLoad("cntAlm2", 0)
 	cnt1 = system.pLoad("cnt1", 0)
 	cnt2 = system.pLoad("cnt2", 0)
-	cnt3 = system.pLoad("cnt3", 0)
-	cnt4 = system.pLoad("cnt4", 0)
-	cnt5 = system.pLoad("cnt5", 0)
 	cntSw1 = system.pLoad("cntSw1")
 	cntSw2 = system.pLoad("cntSw2")
-	cntSw3 = system.pLoad("cntSw3")
-	cntSw4 = system.pLoad("cntSw3")
-	cntSw5 = system.pLoad("cntSw5")
 	system.registerTelemetry(1,cntLb1,1,printCounter1)
 	system.registerTelemetry(2,cntLb2,1,printCounter2)
-	system.registerControl(8,trans1.cont1,trans1.cs1)
-	system.registerControl(9,trans1.cont2,trans1.cs2)
-	system.setControl(8, 0, 0, 0)
-	system.setControl(9, 0, 0, 0)
+	system.registerControl(1,trans1.cont1,trans1.cs1)
+	system.registerControl(2,trans1.cont2,trans1.cs2)
+	system.setControl(1, 0, 0, 0)
+	system.setControl(2, 0, 0, 0)
 end
 ----------------------------------------------------------------------
-cntrVersion = "1.7"
+cntrVersion = "1.8"
 setLanguage()
 return { init=init, loop=loop, author="RC-Thoughts", version=cntrVersion, name=trans1.appName}

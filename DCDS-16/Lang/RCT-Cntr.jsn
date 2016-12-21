@@ -1,0 +1,59 @@
+{
+  "default":"en",
+  "en":{
+    "appName":"Event Counter",
+	"labelW":"Telemetry Window Label",
+	"counterName":"Counter Name",
+    "counter1":"Counter 1",
+	"counter2":"Counter 2",
+	"switch":"Activating Switch",
+    "currentCnt":"Current Count",
+    "almVal":"Alarm Value",
+	"cont1":"Counter 1 Alm",
+	"cont2":"Counter 2 Alm",
+	"cs1":"CS1",
+	"cs2":"CS2"
+  },
+  "de":{
+    "appName":"Ereigniszähler",
+	"labelW":"Telemetrie Fenster",
+	"counterName":"Zähler Name",
+    "counter1":"Zähler 1",
+	"counter2":"Zähler 2",
+	"switch":"Aktivierungsschalter",
+    "currentCnt":"Aktuelle Anzahl",
+    "almVal":"Alarmwert",
+	"cont1":"Zähler 1 Alm",
+	"cont2":"Zähler 2 Alm",
+	"cs1":"ZA1",
+	"cs2":"ZA2"
+  },
+  "fr":{
+    "appName":"Compteur d'Evénements",
+	"labelW":"Editer le Nom",
+	"counterName":"Editer le Nom",
+    "counter1":"Compteur 1",
+	"counter2":"Compteur 2",
+	"switch":"Inter d'activation",
+    "currentCnt":"Niveau du Compteur",
+    "almVal":"Valeur d'alarme",
+	"cont1":"Compteur 1 Alm",
+	"cont2":"Compteur 2 Alm",
+	"cs1":"CA1",
+	"cs2":"CA2"
+  },
+  "es":{
+    "appName":"Contador de eventos",
+	"labelW":"Etiqueta de telemetría",
+	"counterName":"Nombre de contador",
+    "counter1":"Contador 1",
+	"counter2":"Contador 2",
+	"switch":"Interruptor de activación",
+    "currentCnt":"Contador actual",
+    "almVal":"Valor de alarma",
+	"cont1":"Contador 1 Alm",
+	"cont2":"Contador 2 Alm",
+	"cs1":"CA1",
+	"cs2":"CA2"
+  }
+}
