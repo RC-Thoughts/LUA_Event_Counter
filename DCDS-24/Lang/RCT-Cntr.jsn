@@ -67,5 +67,22 @@
 	"cont2":"Contador 2 Alm",
 	"cs1":"CA1",
 	"cs2":"CA2"
+  },
+  “it":{
+	"appName":"Contatore Eventi",
+	"labelW":"Titolo schermo telemetria",
+	"counterName":"Nome Contatore",
+	"counter1":"Contatore 1",
+	"counter2":"Contatore 2",
+	"counter3":"Contatore 3",
+	"counter4":"Contatore 4",
+	"counter5":"Contatore 5",
+	"switch":"Switch attivazione",
+	"currentCnt":"Contatore Corrente",
+	"almVal":"Valore Allarme",
+	"cont1":"Contat. 1 Alm",
+	"cont2":"Contat. 2 Alm",
+	"cs1":"CS1",
+	"cs2":"CS2"
   }
 }

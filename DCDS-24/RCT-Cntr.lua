@@ -365,6 +365,6 @@ local function init()
 	system.setControl(9, 0, 0, 0)
 end
 ----------------------------------------------------------------------
-cntrVersion = "1.8"
+cntrVersion = "1.9"
 setLanguage()
 return { init=init, loop=loop, author="RC-Thoughts", version=cntrVersion, name=trans1.appName}
