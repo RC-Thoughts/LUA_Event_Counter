@@ -68,7 +68,7 @@
 	"cs1":"CA1",
 	"cs2":"CA2"
   },
-  “it":{
+  "it":{
 	"appName":"Contatore Eventi",
 	"labelW":"Titolo schermo telemetria",
 	"counterName":"Nome Contatore",
