@@ -29,6 +29,7 @@
 	Released under MIT-license by Tero @ RC-Thoughts.com 2016
 	---------------------------------------------------------
 --]]
+collectgarbage()
 ----------------------------------------------------------------------
 -- Locals for the application
 local cntLb1, cntLb2, cntSw1, cntSw2, cnt1, cnt2, cntAlm1, cntAlm2
@@ -170,7 +171,7 @@ local function initForm()
 	form.addLabel({label=trans1.counter1,font=FONT_BOLD})
 	
 	form.addRow(2)
-	form.addLabel({label=trans1.labelW,width=175})
+	form.addLabel({label=trans1.labelW,width=185})
 	form.addTextbox(cntLb1,14,cntLbChanged1)
 	
 	form.addRow(2)
@@ -189,7 +190,7 @@ local function initForm()
 	form.addLabel({label=trans1.counter2,font=FONT_BOLD})
 	
 	form.addRow(2)
-	form.addLabel({label=trans1.labelW,width=175})
+	form.addLabel({label=trans1.labelW,width=185})
 	form.addTextbox(cntLb2,14,cntLbChanged2)
 	
 	form.addRow(2)
@@ -254,23 +255,26 @@ end
 ----------------------------------------------------------------------
 -- Application initialization
 local function init()
+    local pLoad = system.pLoad
 	system.registerForm(1,MENU_APPS,trans1.appName,initForm)	
-	cntLb1 = system.pLoad("cntLb1",trans1.counter1)
-	cntLb2 = system.pLoad("cntLb2",trans1.counter2)
-	cntAlm1 = system.pLoad("cntAlm1", 0)
-	cntAlm2 = system.pLoad("cntAlm2", 0)
-	cnt1 = system.pLoad("cnt1", 0)
-	cnt2 = system.pLoad("cnt2", 0)
-	cntSw1 = system.pLoad("cntSw1")
-	cntSw2 = system.pLoad("cntSw2")
+	cntLb1 = pLoad("cntLb1",trans1.counter1)
+	cntLb2 = pLoad("cntLb2",trans1.counter2)
+	cntAlm1 = pLoad("cntAlm1", 0)
+	cntAlm2 = pLoad("cntAlm2", 0)
+	cnt1 = pLoad("cnt1", 0)
+	cnt2 = pLoad("cnt2", 0)
+	cntSw1 = pLoad("cntSw1")
+	cntSw2 = pLoad("cntSw2")
 	system.registerTelemetry(1,cntLb1,1,printCounter1)
 	system.registerTelemetry(2,cntLb2,1,printCounter2)
 	system.registerControl(1,trans1.cont1,trans1.cs1)
 	system.registerControl(2,trans1.cont2,trans1.cs2)
 	system.setControl(1, 0, 0, 0)
 	system.setControl(2, 0, 0, 0)
+    collectgarbage()
 end
 ----------------------------------------------------------------------
-cntrVersion = "1.9"
+cntrVersion = "2.0"
 setLanguage()
+collectgarbage()
 return { init=init, loop=loop, author="RC-Thoughts", version=cntrVersion, name=trans1.appName}
