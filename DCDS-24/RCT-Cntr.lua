@@ -28,6 +28,7 @@
 	Released under MIT-license by Tero @ RC-Thoughts.com 2016
 	---------------------------------------------------------
 --]]
+collectgarbage()
 ----------------------------------------------------------------------
 -- Locals for the application
 local cnt1, cnt2, cnt3, cnt4, cnt5, cntAlm1, cntAlm2
@@ -35,32 +36,14 @@ local cntLb1, cntLb2, cntLb3, cntLb4, cntLb5
 local cntSw1, cntSw2, cntSw3, cntSw4, cntSw5
 local stateCnt1, stateCnt2, stateCnt3, stateCnt4, stateCnt5 = 0,0,0,0,0
 ----------------------------------------------------------------------
--- Function for translation file-reading
-local function readFile(path) 
-	local f = io.open(path,"r")
-	local lines={}
-	if(f) then
-		while 1 do 
-			local buf=io.read(f,512)
-			if(buf ~= "")then 
-				lines[#lines+1] = buf
-				else
-				break   
-			end   
-		end 
-		io.close(f)
-		return table.concat(lines,"") 
-	end
-end 
---------------------------------------------------------------------------------
 -- Read translations
-local function setLanguage()	
-	local lng=system.getLocale();
-	local file = readFile("Apps/Lang/RCT-Cntr.jsn")
-	local obj = json.decode(file)  
-	if(obj) then
-		trans1 = obj[lng] or obj[obj.default]
-	end
+local function setLanguage()
+    local lng=system.getLocale()
+    local file = io.readall("Apps/Lang/RCT-Cntr.jsn")
+    local obj = json.decode(file)
+    if(obj) then
+        trans1 = obj[lng] or obj[obj.default]
+    end
 end
 ----------------------------------------------------------------------
 -- Draw telemetry screen for main display
@@ -335,6 +318,7 @@ local function loop()
 		else
 		system.setControl(9, 0, 0, 0)
 	end
+    collectgarbage()
 end
 ----------------------------------------------------------------------
 -- Application initialization
@@ -363,8 +347,10 @@ local function init()
 	system.registerControl(9,trans1.cont2,trans1.cs2)
 	system.setControl(8, 0, 0, 0)
 	system.setControl(9, 0, 0, 0)
+    collectgarbage()
 end
 ----------------------------------------------------------------------
-cntrVersion = "1.9"
+cntrVersion = "2.0"
 setLanguage()
+collectgarbage()
 return { init=init, loop=loop, author="RC-Thoughts", version=cntrVersion, name=trans1.appName}

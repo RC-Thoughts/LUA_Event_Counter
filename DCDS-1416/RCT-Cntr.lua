@@ -35,32 +35,13 @@ collectgarbage()
 local cntLb1, cntLb2, cntSw1, cntSw2, cnt1, cnt2, cntAlm1, cntAlm2
 local stateCnt1, stateCnt2 = 0,0
 ----------------------------------------------------------------------
--- Function for translation file-reading
-local function readFile(path) 
-	local f = io.open(path,"r")
-	local lines={}
-	if(f) then
-		while 1 do 
-			local buf=io.read(f,512)
-			if(buf ~= "")then 
-				lines[#lines+1] = buf
-				else
-				break   
-			end   
-		end 
-		io.close(f)
-		return table.concat(lines,"") 
-	end
-end 
---------------------------------------------------------------------------------
--- Read translations
-local function setLanguage()	
-	local lng=system.getLocale();
-	local file = readFile("Apps/Lang/RCT-Cntr.jsn")
-	local obj = json.decode(file)  
-	if(obj) then
-		trans1 = obj[lng] or obj[obj.default]
-	end
+local function setLanguage()
+    local lng=system.getLocale()
+    local file = io.readall("Apps/Lang/RCT-Cntr.jsn")
+    local obj = json.decode(file)
+    if(obj) then
+        trans1 = obj[lng] or obj[obj.default]
+    end
 end
 ----------------------------------------------------------------------
 -- Draw telemetry screen for main display
