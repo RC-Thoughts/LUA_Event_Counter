@@ -25,7 +25,8 @@
 	---------------------------------------------------------
 	Event Counter is a part of RC-Thoughts Jeti Tools.
 	---------------------------------------------------------
-	Released under MIT-license by Tero @ RC-Thoughts.com 2016
+                Released under MIT-license by 
+               Tero @ RC-Thoughts.com 2016-2017
 	---------------------------------------------------------
 --]]
 collectgarbage()
@@ -34,6 +35,7 @@ collectgarbage()
 local cnt1, cnt2, cnt3, cnt4, cnt5, cntAlm1, cntAlm2
 local cntLb1, cntLb2, cntLb3, cntLb4, cntLb5
 local cntSw1, cntSw2, cntSw3, cntSw4, cntSw5
+local resSw1, resSw2, resSw3, resSw4, resSw5
 local stateCnt1, stateCnt2, stateCnt3, stateCnt4, stateCnt5 = 0,0,0,0,0
 ----------------------------------------------------------------------
 -- Read translations
@@ -144,6 +146,31 @@ local function cntSwChanged5(value)
 	cntSw5 = value
 	system.pSave("cntSw5",value)
 end
+--
+local function resSwChanged1(value)
+	resSw1 = value
+	system.pSave("resSw1",value)
+end
+
+local function resSwChanged2(value)
+	resSw2 = value
+	system.pSave("resSw2",value)
+end
+
+local function resSwChanged3(value)
+	resSw3 = value
+	system.pSave("resSw3",value)
+end
+
+local function resSwChanged4(value)
+	resSw4 = value
+	system.pSave("resSw4",value)
+end
+
+local function resSwChanged5(value)
+	resSw5 = value
+	system.pSave("resSw5",value)
+end
 ----------------------------------------------------------------------
 -- Draw the main form (Application inteface)
 local function initForm()
@@ -160,6 +187,10 @@ local function initForm()
 	form.addRow(2)
 	form.addLabel({label=trans1.switch,width=200})
 	form.addInputbox(cntSw1,true,cntSwChanged1)
+    
+    form.addRow(2)
+	form.addLabel({label=trans1.resSwitch,width=200})
+	form.addInputbox(resSw1,true,resSwChanged1)
 	
 	form.addRow(2)
 	form.addLabel({label=trans1.currentCnt})
@@ -179,6 +210,10 @@ local function initForm()
 	form.addRow(2)
 	form.addLabel({label=trans1.switch,width=200})
 	form.addInputbox(cntSw2,true,cntSwChanged2)
+    
+    form.addRow(2)
+	form.addLabel({label=trans1.resSwitch,width=200})
+	form.addInputbox(resSw2,true,resSwChanged2)
 	
 	form.addRow(2)
 	form.addLabel({label=trans1.currentCnt})
@@ -198,6 +233,10 @@ local function initForm()
 	form.addRow(2)
 	form.addLabel({label=trans1.switch,width=200})
 	form.addInputbox(cntSw3,true,cntSwChanged3)
+    
+    form.addRow(2)
+	form.addLabel({label=trans1.resSwitch,width=200})
+	form.addInputbox(resSw3,true,resSwChanged3)
 	
 	form.addRow(2)
 	form.addLabel({label=trans1.currentCnt})
@@ -213,6 +252,10 @@ local function initForm()
 	form.addRow(2)
 	form.addLabel({label=trans1.switch,width=200})
 	form.addInputbox(cntSw4,true,cntSwChanged4)
+    
+    form.addRow(2)
+	form.addLabel({label=trans1.resSwitch,width=200})
+	form.addInputbox(resSw4,true,resSwChanged4)
 	
 	form.addRow(2)
 	form.addLabel({label=trans1.currentCnt})
@@ -228,6 +271,10 @@ local function initForm()
 	form.addRow(2)
 	form.addLabel({label=trans1.switch,width=200})
 	form.addInputbox(cntSw5,true,cntSwChanged5)
+    
+    form.addRow(2)
+	form.addLabel({label=trans1.resSwitch,width=200})
+	form.addInputbox(resSw5,true,resSwChanged5)
 	
 	form.addRow(2)
 	form.addLabel({label=trans1.currentCnt})
@@ -241,7 +288,8 @@ end
 -- also resets count if reaches over 32767 and takes care of counter switches
 local function loop()
 	local cntSw1, cntSw2, cntSw3, cntSw4, cntSw5 = system.getInputsVal(cntSw1, cntSw2, cntSw3, cntSw4, cntSw5)
-	
+	local resSw1, resSw2, resSw3, resSw4, resSw5 = system.getInputsVal(resSw1, resSw2, resSw3, resSw4, resSw5)
+    
 	if (cntSw1 == 1 and stateCnt1 == 0) then
 		stateCnt1 = 1
 		cnt1 = cnt1 + 1
@@ -254,6 +302,12 @@ local function loop()
 			stateCnt1 = 0
 		end
 	end	
+    
+    if (resSw1 == 1) then
+        cnt1 = 0
+        system.pSave("cnt1",0)
+        form.reinit()
+    end
 	
 	if (cntSw2 == 1 and stateCnt2 == 0) then
 		stateCnt2 = 1
@@ -267,6 +321,12 @@ local function loop()
 			stateCnt2 = 0
 		end
 	end
+    
+    if (resSw2 == 1) then
+        cnt2 = 0
+        system.pSave("cnt2",0)
+        form.reinit()
+    end
 	
 	if (cntSw3 == 1 and stateCnt3 == 0) then
 		stateCnt3 = 1
@@ -280,6 +340,12 @@ local function loop()
 			stateCnt3 = 0
 		end
 	end
+    
+    if (resSw3 == 1) then
+        cnt3 = 0
+        system.pSave("cnt3",0)
+        form.reinit()
+    end
 	
 	if (cntSw4 == 1 and stateCnt4 == 0) then
 		stateCnt4 = 1
@@ -293,6 +359,12 @@ local function loop()
 			stateCnt4 = 0
 		end
 	end
+    
+    if (resSw4 == 1) then
+        cnt4 = 0
+        system.pSave("cnt4",0)
+        form.reinit()
+    end
 	
 	if (cntSw5 == 1 and stateCnt5 == 0) then
 		stateCnt5 = 1
@@ -306,6 +378,12 @@ local function loop()
 			stateCnt5 = 0
 		end
 	end
+    
+    if (resSw5 == 1) then
+        cnt5 = 0
+        system.pSave("cnt5",0)
+        form.reinit()
+    end
 	
 	if (cntAlm1 > 0 and cnt1 >= cntAlm1) then
 		system.setControl(8, 1, 0, 0)
@@ -341,6 +419,11 @@ local function init()
 	cntSw3 = system.pLoad("cntSw3")
 	cntSw4 = system.pLoad("cntSw4")
 	cntSw5 = system.pLoad("cntSw5")
+    resSw1 = system.pLoad("resSw1")
+	resSw2 = system.pLoad("resSw2")
+	resSw3 = system.pLoad("resSw3")
+	resSw4 = system.pLoad("resSw4")
+	resSw5 = system.pLoad("resSw5")
 	system.registerTelemetry(1,cntLb1,1,printCounter1)
 	system.registerTelemetry(2,cntLb2,1,printCounter2)
 	system.registerControl(8,trans1.cont1,trans1.cs1)
@@ -350,7 +433,7 @@ local function init()
     collectgarbage()
 end
 ----------------------------------------------------------------------
-cntrVersion = "2.0"
+cntrVersion = "2.1"
 setLanguage()
 collectgarbage()
 return { init=init, loop=loop, author="RC-Thoughts", version=cntrVersion, name=trans1.appName}
